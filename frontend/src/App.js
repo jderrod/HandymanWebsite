@@ -1,10 +1,10 @@
 // frontend/src/App.js
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ServicesList from './components/ServicesList';
-import QuoteForm from './components/QuoteForm';
-import Dashboard from './components/Dashboard';
-import Login from './components/Login';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ServicesList from "./components/ServicesList";
+import QuoteForm from "./components/QuoteForm";
+import Dashboard from "./components/Dashboard";
+import Login from "./components/Login";
 
 const HomePage = () => {
   return (

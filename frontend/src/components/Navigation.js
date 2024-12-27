@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Navigation = () => {
   return (
@@ -11,18 +11,30 @@ const Navigation = () => {
               Handyman Services
             </Link>
           </div>
-          
+
           <div className="flex space-x-8">
-            <Link to="/" className="text-gray-700 hover:text-gray-900 px-3 py-2">
+            <Link
+              to="/"
+              className="text-gray-700 hover:text-gray-900 px-3 py-2"
+            >
               Home
             </Link>
-            <Link to="/services" className="text-gray-700 hover:text-gray-900 px-3 py-2">
+            <Link
+              to="/services"
+              className="text-gray-700 hover:text-gray-900 px-3 py-2"
+            >
               Services
             </Link>
-            <Link to="/contact" className="text-gray-700 hover:text-gray-900 px-3 py-2">
+            <Link
+              to="/contact"
+              className="text-gray-700 hover:text-gray-900 px-3 py-2"
+            >
               Contact
             </Link>
-            <Link to="/about" className="text-gray-700 hover:text-gray-900 px-3 py-2">
+            <Link
+              to="/about"
+              className="text-gray-700 hover:text-gray-900 px-3 py-2"
+            >
               About
             </Link>
           </div>

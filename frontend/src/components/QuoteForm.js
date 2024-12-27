@@ -1,22 +1,22 @@
 // frontend/src/components/QuoteForm.js
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const QuoteForm = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    phoneNumber: '',
-    email: '',
-    subject: '',
-    additionalDetails: ''
+    name: "",
+    phoneNumber: "",
+    email: "",
+    subject: "",
+    additionalDetails: "",
   });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -26,25 +26,25 @@ const QuoteForm = () => {
     setSuccess(false);
 
     try {
-      const response = await fetch('http://localhost:5000/api/quotes', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5000/api/quotes", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to submit quote');
+        throw new Error("Failed to submit quote");
       }
 
       setSuccess(true);
       setFormData({
-        name: '',
-        phoneNumber: '',
-        email: '',
-        subject: '',
-        additionalDetails: ''
+        name: "",
+        phoneNumber: "",
+        email: "",
+        subject: "",
+        additionalDetails: "",
       });
     } catch (err) {
       setError(err.message);
@@ -54,13 +54,13 @@ const QuoteForm = () => {
   return (
     <div className="max-w-2xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-6">Request a Quote</h2>
-      
+
       {error && (
         <div className="mb-4 p-4 bg-red-100 text-red-700 rounded-md">
           {error}
         </div>
       )}
-      
+
       {success && (
         <div className="mb-4 p-4 bg-green-100 text-green-700 rounded-md">
           Quote submitted successfully!
@@ -69,7 +69,10 @@ const QuoteForm = () => {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="name"
+            className="block text-sm font-medium text-gray-700"
+          >
             Name *
           </label>
           <input
@@ -84,7 +87,10 @@ const QuoteForm = () => {
         </div>
 
         <div>
-          <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="phoneNumber"
+            className="block text-sm font-medium text-gray-700"
+          >
             Phone Number *
           </label>
           <input
@@ -99,7 +105,10 @@ const QuoteForm = () => {
         </div>
 
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700"
+          >
             Email *
           </label>
           <input
@@ -114,7 +123,10 @@ const QuoteForm = () => {
         </div>
 
         <div>
-          <label htmlFor="subject" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="subject"
+            className="block text-sm font-medium text-gray-700"
+          >
             Subject *
           </label>
           <input
@@ -129,7 +141,10 @@ const QuoteForm = () => {
         </div>
 
         <div>
-          <label htmlFor="additionalDetails" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="additionalDetails"
+            className="block text-sm font-medium text-gray-700"
+          >
             Additional Details
           </label>
           <textarea

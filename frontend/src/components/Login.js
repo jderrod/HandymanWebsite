@@ -1,18 +1,21 @@
 // frontend/src/components/Login.js
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [credentials, setCredentials] = useState({ username: '', password: '' });
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: "",
+  });
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setCredentials(prev => ({
+    setCredentials((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -21,22 +24,22 @@ const Login = () => {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(credentials)
+        body: JSON.stringify(credentials),
       });
 
       if (!response.ok) {
-        throw new Error('Invalid credentials');
+        throw new Error("Invalid credentials");
       }
 
       const data = await response.json();
-      localStorage.setItem('token', data.token);
+      localStorage.setItem("token", data.token);
       setIsOpen(false);
-      navigate('/dashboard');
+      navigate("/dashboard");
     } catch (err) {
       setError(err.message);
     }
@@ -58,10 +61,13 @@ const Login = () => {
               {error}
             </div>
           )}
-          
+
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Username
               </label>
               <input
@@ -76,7 +82,10 @@ const Login = () => {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Password
               </label>
               <input

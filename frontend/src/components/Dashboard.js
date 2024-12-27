@@ -1,6 +1,6 @@
 // frontend/src/components/Dashboard.js
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [quotes, setQuotes] = useState([]);
@@ -11,34 +11,34 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchQuotes = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         if (!token) {
-          navigate('/');
+          navigate("/");
           return;
         }
 
-        const response = await fetch('http://localhost:5000/api/quotes', {
+        const response = await fetch("http://localhost:5000/api/quotes", {
           headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         });
 
         if (!response.ok) {
           if (response.status === 401) {
             // Token expired or invalid
-            localStorage.removeItem('token');
-            navigate('/');
+            localStorage.removeItem("token");
+            navigate("/");
             return;
           }
-          throw new Error('Failed to fetch quotes');
+          throw new Error("Failed to fetch quotes");
         }
 
         const data = await response.json();
         setQuotes(data);
         setError(null);
       } catch (err) {
-        console.error('Error fetching quotes:', err);
+        console.error("Error fetching quotes:", err);
         setError(err.message);
       } finally {
         setLoading(false);
@@ -49,8 +49,8 @@ const Dashboard = () => {
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/');
+    localStorage.removeItem("token");
+    navigate("/");
   };
 
   if (loading) {
@@ -82,8 +82,10 @@ const Dashboard = () => {
 
         <div className="bg-white rounded-lg shadow">
           <div className="p-6">
-            <h2 className="text-xl font-semibold mb-4">Recent Quote Requests</h2>
-            
+            <h2 className="text-xl font-semibold mb-4">
+              Recent Quote Requests
+            </h2>
+
             {quotes.length === 0 ? (
               <p className="text-gray-500">No quotes found.</p>
             ) : (
@@ -97,12 +99,16 @@ const Dashboard = () => {
                       <div>
                         <h3 className="font-semibold">Contact Information</h3>
                         <p className="text-gray-600">Name: {quote.name}</p>
-                        <p className="text-gray-600">Phone: {quote.phoneNumber}</p>
+                        <p className="text-gray-600">
+                          Phone: {quote.phoneNumber}
+                        </p>
                         <p className="text-gray-600">Email: {quote.email}</p>
                       </div>
                       <div>
                         <h3 className="font-semibold">Request Details</h3>
-                        <p className="text-gray-600">Subject: {quote.subject}</p>
+                        <p className="text-gray-600">
+                          Subject: {quote.subject}
+                        </p>
                         {quote.additionalDetails && (
                           <p className="text-gray-600">
                             Details: {quote.additionalDetails}

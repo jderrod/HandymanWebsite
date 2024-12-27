@@ -1,53 +1,47 @@
-require('dotenv').config({ path: './.env' });
+// backend/app.js
 const express = require('express');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const mongoose = require('mongoose');
+const cors = require('cors');
+require('dotenv').config();
 
+// Initialize Express
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 
-// MongoDB connection URI
-console.log('MongoDB URI:', process.env.MONGO_URI);
-const uri = process.env.MONGO_URI;
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
+// Middleware
+app.use(express.json());
+app.use(cors());
+
+// MongoDB Connection
+const MONGO_URI = process.env.MONGODB_URI;;
+
+mongoose
+  .connect(MONGO_URI, {
+    serverSelectionTimeoutMS: 5000,
+  })
+  .then(() => {
+    console.log('Connected to MongoDB successfully');
+    console.log('Database:', mongoose.connection.name);
+    console.log('Host:', mongoose.connection.host);
+  })
+  .catch((err) => console.error('MongoDB connection error:', err));
+
+// Import routes
+const servicesRouter = require('./routes/services');
+const quotesRoutes = require('./routes/quotes');
+const { router: authRouter } = require('./routes/auth');
+
+// Use routes
+app.use('/api/services', servicesRouter);
+app.use('/api/quotes', quotesRoutes);
+app.use('/api/auth', authRouter);
+
+// Root route
+app.get('/', (req, res) => {
+  res.send('API is running!');
 });
 
-// Connect to MongoDB
-async function connectToDatabase() {
-  try {
-    await client.connect();
-    console.log("Connected to MongoDB!");
-
-    // Test the connection by pinging the database
-    await client.db("admin").command({ ping: 1 });
-    console.log("Ping successful!");
-  } catch (error) {
-    console.error("Failed to connect to MongoDB:", error.message);
-    process.exit(1);
-  }
-}
-
-// Connect to MongoDB and start the server
-connectToDatabase().then(() => {
-  // Define your API routes here
-  app.get('/api/services', async (req, res) => {
-    try {
-      // Fetch all documents from the 'services' collection
-      const database = client.db("Services"); // Name of your database
-      const collection = database.collection("services"); // Name of your collection
-      const services = await collection.find().toArray();
-      res.json(services);
-    } catch (error) {
-      res.status(500).json({ message: "Error fetching services", error: error.message });
-    }
-  });
-
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
-

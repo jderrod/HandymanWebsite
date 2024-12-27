@@ -1,9 +1,17 @@
 const mongoose = require('mongoose');
 
-const ServiceSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  price: { type: Number, required: true },
-  description: { type: String },
+const serviceSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  cost: { type: String, required: true }
 });
 
-module.exports = mongoose.model('Service', ServiceSchema);
+// Add this for debugging
+serviceSchema.pre('save', function(next) {
+  console.log('Attempting to save service:', this.toObject());
+  next();
+});
+
+const Service = mongoose.model('services', serviceSchema);
+
+module.exports = Service;

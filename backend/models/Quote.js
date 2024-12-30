@@ -1,29 +1,26 @@
 // backend/models/Quote.js
-const mongoose = require('mongoose');
+const mongoose = require('mongoose');  // Add this line at the top
 
-const quoteSchema = new mongoose.Schema({
-  name: {
+const QuoteSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  phoneNumber: { type: String, required: true },
+  email: { type: String, required: true },
+  subject: { type: String, required: true },
+  additionalDetails: { type: String },
+  
+  status: {
     type: String,
-    required: true
+    enum: ['pending', 'in-progress', 'completed', 'cancelled'],
+    default: 'pending'
   },
-  phoneNumber: {
+  adminNotes: {
     type: String,
-    required: true
+    default: ''
   },
-  email: {
-    type: String,
-    required: true
-  },
-  subject: {
-    type: String,
-    required: true
-  },
-  additionalDetails: {
-    type: String,
-    required: false
+  lastUpdated: {
+    type: Date,
+    default: Date.now
   }
-}, {
-  timestamps: true
 });
 
-module.exports = mongoose.model('Quote', quoteSchema);
+module.exports = mongoose.model('Quote', QuoteSchema);

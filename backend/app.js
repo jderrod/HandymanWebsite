@@ -41,6 +41,9 @@ app.get('/', (req, res) => {
   res.send('API is running!');
 });
 
+const dashboardRoutes = require('./routes/dashboard');
+app.use('/api/dashboard', dashboardRoutes);
+
 // Start server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
